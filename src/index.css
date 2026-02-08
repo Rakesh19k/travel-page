@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #e85d04;
+  --color-primary-light: #f48c06;
+  --color-gold: #faa307;
+  --color-dark: #0a0a0a;
+  --color-dark-secondary: #1a1a1a;
+  --color-dark-tertiary: #2d2d2d;
+}
+
+:root {
+  font-family: 'Outfit', system-ui, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Dark theme (default) */
+:root,
+:root.dark {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #2d2d2d;
+  --text-primary: rgba(255, 255, 255, 0.95);
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --border-color: rgba(55, 65, 81, 0.8);
+  --card-bg: #1a1a1a;
+  --accent: #e85d04;
+  --accent-light: #f48c06;
+}
+
+/* Light theme */
+:root.light {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-color: rgba(203, 213, 225, 0.8);
+  --card-bg: #ffffff;
+  --accent: #c2410c;
+  --accent-light: #ea580c;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.font-display {
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
