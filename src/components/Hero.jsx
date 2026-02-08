@@ -1,4 +1,5 @@
 import { useTheme } from '../context/ThemeContext'
+import { bikeIamges } from '../data/destinations'
 
 export default function Hero() {
   const { theme } = useTheme()
@@ -49,9 +50,9 @@ export default function Hero() {
       <div className="absolute bottom-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)]/40 to-transparent" />
       
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 lg:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-12 items-center">
+          <div className="space-y-5 sm:space-y-6 lg:space-y-8 lg:pr-0">
             <div className="inline-block">
               <span
                 className="px-4 py-1.5 rounded-full text-sm font-medium border transition-colors duration-500"
@@ -64,7 +65,7 @@ export default function Hero() {
                 Royal Enfield Hunter 350
               </span>
             </div>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl leading-none text-[var(--text-primary)] tracking-wide transition-colors duration-500">
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl leading-none text-[var(--text-primary)] tracking-wide transition-colors duration-500">
               Ride Beyond Roads.
               <br />
               <span className="text-[var(--accent)]">Discover India</span>
@@ -92,23 +93,23 @@ export default function Hero() {
             </div>
           </div>
           
-          {/* Bike - Royal Enfield Hunter 350 style */}
-          <div className="relative hidden lg:block">
-            <div className="relative aspect-square max-w-lg mx-auto">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-full h-full flex items-end justify-center">
+          {/* Bike gallery - corner-overlap only, visible on all screen sizes */}
+          <div className="relative block w-full max-w-[280px] sm:max-w-sm md:max-w-md lg:max-w-xl mx-auto mt-8 sm:mt-10 lg:mt-0">
+            <div className="relative w-full aspect-[4/3] min-h-[240px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[380px]">
+              {bikeIamges?.map((item, i) => (
+                <div key={i} className={item.className} style={item.style}>
                   <img
-                    src="https://imgs.search.brave.com/lrPSb5-YwIqOZrQxiY_wXrFDVI9hUAeAH50AdRU-HcM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG5p/LmF1dG9jYXJpbmRp/YS5jb20vRXh0cmFJ/bWFnZXMvMjAyNTA0/MjIwMzMxMDhfUm95/YWwlMjBFbmZpZWxk/JTIwSHVudGVyJTIw/MzUwJTIwc2lkZSUy/MHN0YXRpYyUyMGlt/YWdlLmpwZz93PTY0/MCZxPTc1"
-                    alt="Royal Enfield Hunter 350"
-                    className="w-full max-w-md object-contain drop-shadow-2xl animate-[float_6s_ease-in-out_infinite]"
+                    src={item.src}
+                    alt={item.alt}
+                    className={item.imgClass}
                     style={{
                       filter: theme === 'dark' ? 'brightness(0.95) contrast(1.05)' : 'brightness(1) contrast(1.02)',
                     }}
                   />
                 </div>
-              </div>
+              ))}
               <div
-                className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-3/4 h-20 blur-3xl rounded-full transition-colors duration-500"
+                className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-3/4 h-20 blur-3xl rounded-full transition-colors duration-500 pointer-events-none z-0"
                 style={{ backgroundColor: 'color-mix(in srgb, var(--accent) 25%, transparent)' }}
               />
             </div>
@@ -117,7 +118,7 @@ export default function Hero() {
       </div>
       
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 animate-bounce pt-10 sm:pt-12">
         <a href="#destinations" className="flex flex-col items-center text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors duration-300">
           <span className="text-xs uppercase tracking-widest mb-2">Scroll</span>
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

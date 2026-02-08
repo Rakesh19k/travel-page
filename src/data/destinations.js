@@ -208,3 +208,34 @@ export const destinations = [
     mustPack: 'Temple-appropriate attire, sunscreen, hat, water, camera for sunrise at Dhanushkodi.',
   },
 ]
+
+
+export const bikeIamges = [
+  {
+    src: 'https://imgs.search.brave.com/lrPSb5-YwIqOZrQxiY_wXrFDVI9hUAeAH50AdRU-HcM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG5p/LmF1dG9jYXJpbmRp/YS5jb20vRXh0cmFJ/bWFnZXMvMjAyNTA0/MjIwMzMxMDhfUm95/YWwlMjBFbmZpZWxk/JTIwSHVudGVyJTIw/MzUwJTIwc2lkZSUy/MHN0YXRpYyUyMGlt/YWdlLmpwZz93PTY0/MCZxPTc1',
+    alt: 'Royal Enfield Hunter 350',
+    className: 'absolute top-[-14%] right-[28%] z-20 w-[48%] max-w-[220px]',
+    imgClass: 'w-full aspect-[4/3] object-cover object-center drop-shadow-2xl rounded-xl animate-[float_6s_ease-in-out_infinite]',
+  },
+  {
+    src: 'https://imgs.search.brave.com/FU6OnW-qd3_5cE8FdwcVWY3oFWAWg5OGizBtIZtDyPQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuOTF3aGVlbHMu/Y29tL25ld3Mvd3At/Y29udGVudC91cGxv/YWRzLzIwMjUvMDQv/RmVhdHVyZWQtaW1h/Z2UtMjAyNS0wNC0y/OFQwODQxMzEuNDMz/LnBuZz93PTU0MCZx/PTUw',
+    alt: 'Motorcycle on open road',
+    className: 'absolute top-[19%] right-0 z-10 w-[48%] max-w-[220px]',
+    imgClass: 'w-full aspect-[4/3] object-cover object-center drop-shadow-xl rounded-xl animate-[float_7s_ease-in-out_infinite] border border-white/10',
+    style: { animationDelay: '0.5s' },
+  },
+  {
+    src: 'https://imgs.search.brave.com/ZbMqDeCnYh7QCQ74QPtywRanFx1aTObz--vVIeoziDs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzFlL2M3/LzIzLzFlYzcyMzQ0/NzI5NzU3MmFmMTgy/YzczYzdjYmE3OTIy/LmpwZw',
+    alt: 'Scenic ride',
+    className: 'absolute top-[22%] left-[4%] z-[5] w-[48%] max-w-[220px]',
+    imgClass: 'w-full aspect-[4/3] object-cover object-center drop-shadow-xl rounded-xl animate-[float_5.5s_ease-in-out_infinite] border border-white/10',
+    style: { animationDelay: '1s' },
+  },
+  {
+    src: 'https://imgs.search.brave.com/hDWYHmxDggWDDH_md-gG2MoMAaQB4NwrRhOyo3SN5Bw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMucGV4ZWxzLmNv/bS9waG90b3MvMTc5/NDQ1OTIvcGV4ZWxz/LXBob3RvLTE3OTQ0/NTkyL2ZyZWUtcGhv/dG8tb2YtYmxhY2st/cm95YWwtZW5maWVs/ZC1odW50ZXItMzUw/LmpwZWc_YXV0bz1j/b21wcmVzcyZjcz10/aW55c3JnYiZ3PTEy/NjAmaD03NTAmZHBy/PTE',
+    alt: 'Adventure riding',
+    className: 'absolute bottom-0 left-1/2 -translate-x-1/2 z-0 w-[50%] max-w-[240px]',
+    imgClass: 'w-full aspect-[4/3] object-cover object-center drop-shadow-lg rounded-xl animate-[float_6.5s_ease-in-out_infinite] border border-white/10',
+    style: { animationDelay: '0.25s' },
+  },
+]

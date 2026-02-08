@@ -21,13 +21,22 @@ export default function Header({ showBackButton = false, onBackClick }) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const [isMobileView, setIsMobileView] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobileView(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  const showSolidHeader = isScrolled || isMobileView
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
       style={{
-        backgroundColor: isScrolled ? 'color-mix(in srgb, var(--bg-primary) 95%, transparent)' : 'transparent',
-        backdropFilter: isScrolled ? 'blur(12px)' : 'none',
-        boxShadow: isScrolled ? '0 4px 30px rgba(0,0,0,0.1)' : 'none',
+        backgroundColor: showSolidHeader ? 'color-mix(in srgb, var(--bg-primary) 92%, transparent)' : 'transparent',
+        backdropFilter: showSolidHeader ? 'blur(12px)' : 'none',
+        boxShadow: showSolidHeader ? '0 2px 20px rgba(0,0,0,0.08)' : 'none',
       }}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
