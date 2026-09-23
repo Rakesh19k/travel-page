@@ -1,8 +1,42 @@
+import { useState, useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
 import { bikeIamges } from '../data/destinations'
 
 export default function Hero() {
   const { theme } = useTheme()
+  
+
+  // Utility to check if today matches a specific date, month, and year
+  function isGivenDateToday(day, month, year) {
+    const today = new Date()
+    return (
+      today.getDate() === day &&
+      today.getMonth() === month - 1 && // JS months are 0-based
+      today.getFullYear() === year
+    )
+  }
+
+  // Set target trip date here
+  const TRIP_DAY = 24
+  const TRIP_MONTH = 9 // October (1-based)
+  const TRIP_YEAR = 2026 // Change as needed
+
+  const [isTripStarted, setIsTripStarted] = useState(isGivenDateToday(1,10,2026))
+
+  useEffect(() => {
+    if (!isTripStarted) {
+      const now = new Date()
+      const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
+      const msToMidnight = nextMidnight - now
+      const timer = setTimeout(() => {
+        if (isGivenDateToday(TRIP_DAY, TRIP_MONTH, TRIP_YEAR)) {
+          setIsTripStarted(true)
+        }
+      }, msToMidnight + 100) // +100ms to ensure date rolled over
+
+      return () => clearTimeout(timer)
+    }
+  }, [isTripStarted])
 
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
@@ -50,7 +84,107 @@ export default function Hero() {
       <div className="absolute bottom-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)]/40 to-transparent" />
       
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 lg:py-32">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 lg:py-26">
+        {/* Upcoming trip — sits above the hero headline */}
+        {isTripStarted ? 
+          <div className="mb-8 sm:mb-10 lg:mb-12">
+            <div
+              className="block rounded-2xl border overflow-hidden transition-all duration-300 bg-[var(--bg-primary)]"
+              style={{
+                background: 'linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, var(--bg-secondary)), var(--bg-primary))',
+                borderColor: 'color-mix(in srgb, var(--accent) 18%, transparent)',
+              }}
+            >
+              <div className="flex flex-col items-center justify-center py-10 md:px-10 md:py-14 text-center">
+                <span
+                  className="px-4 py-1.5 rounded-full text-sm font-semibold uppercase tracking-wider mb-3"
+                  style={{
+                    backgroundColor: 'color-mix(in srgb, var(--accent) 16%, transparent)',
+                    color: 'var(--accent)',
+                  }}
+                >
+                  Trip Started!
+                </span>
+                <h2
+                  className="font-display text-2xl sm:text-3xl md:text-4xl tracking-wide mb-2"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  The group ride to Munnar is now underway.
+                </h2>
+                <p className="text-sm sm:text-base max-w-2xl mx-auto mb-3" style={{ color: 'var(--text-secondary)' }}>
+                  Thanks for showing interest! The next trip will be posted soon—stay connected for updates and upcoming rides.
+                </p>
+                <div className="flex flex-col items-center gap-2 text-xs" style={{ color: 'var(--text-muted)' }}>
+                  <span>Follow us for announcements on the next adventure.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        : 
+          <div className="mb-8 sm:mb-10 lg:mb-12">
+            <a
+              href="#destinations"
+              className="group block rounded-2xl border overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-[var(--accent)]/15"
+              style={{
+                background: 'linear-gradient(135deg, color-mix(in srgb, var(--accent) 14%, var(--bg-secondary)), var(--bg-primary))',
+                borderColor: 'color-mix(in srgb, var(--accent) 35%, transparent)',
+              }}
+            >
+              <div className="flex flex-col md:flex-row md:items-stretch">
+                {/* Date block */}
+                <div
+                  className="flex md:flex-col items-center justify-center gap-3 md:gap-1 px-6 py-4 md:px-8 md:py-6 md:min-w-[140px] text-white"
+                  style={{ backgroundColor: 'var(--accent)' }}
+                >
+                  <span className="text-xs uppercase tracking-[0.2em] font-semibold opacity-90">Starts</span>
+                  <span className="font-display text-4xl md:text-5xl leading-none tracking-wide">01</span>
+                  <span className="text-sm font-semibold uppercase tracking-widest">Oct 2026</span>
+                </div>
+
+                {/* Trip copy */}
+                <div className="flex-1 px-5 py-5 sm:px-6 sm:py-6">
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <span
+                      className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider"
+                      style={{
+                        backgroundColor: 'color-mix(in srgb, var(--accent) 20%, transparent)',
+                        color: 'var(--accent)',
+                      }}
+                    >
+                      Upcoming group ride
+                    </span>
+                    <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                      Open to rider friends
+                    </span>
+                  </div>
+
+                  <h2
+                    className="font-display text-3xl sm:text-4xl tracking-wide mb-1"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
+                    Bengaluru → Munnar
+                  </h2>
+                  <p className="text-sm sm:text-base mb-4 max-w-2xl" style={{ color: 'var(--text-secondary)' }}>
+                    Tea-estate ghats, waterfalls, and cool hill air. We roll out from Bangalore on 1 October with a small pack of rider friends. Hunter 350s welcome — every mile is the story.
+                  </p>
+
+                  <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    <span><strong style={{ color: 'var(--text-primary)' }}>~460 km</strong> · 8–9 hrs</span>
+                    <span><strong style={{ color: 'var(--text-primary)' }}>Start Point</strong> · FF21-PODS, Thubarahalli, Bangalore</span>
+                    <span><strong style={{ color: 'var(--text-primary)' }}>End Point</strong> · Munnar, Kerala</span>
+                    <span><strong style={{ color: 'var(--text-primary)' }}>Contact Number</strong> · +91 7488967469</span>
+                  </div>
+                </div>
+
+                <div className="hidden md:flex items-center px-6" style={{ color: 'var(--accent)' }}>
+                  <span className="text-sm font-semibold whitespace-nowrap group-hover:translate-x-1 transition-transform">
+                    View Munnar →
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        }
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-12 items-center">
           <div className="space-y-5 sm:space-y-6 lg:space-y-8 lg:pr-0">
             <div className="inline-block">
