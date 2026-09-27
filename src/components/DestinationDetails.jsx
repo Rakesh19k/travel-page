@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import Header from './Header'
 import Footer from './Footer'
+import DoneFlag from './DoneFlag'
 
 export default function DestinationDetails({ destination, onClose }) {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -48,9 +49,10 @@ export default function DestinationDetails({ destination, onClose }) {
       <main className="flex-1 overflow-y-auto pt-16 md:pt-20">
         {/* Image Slider - part of scroll */}
         <div className="relative w-full h-[45vh] min-h-[320px] md:h-[55vh] overflow-hidden mb-6">
-          {images.length > 0 ? (
+          {destination?.completed && <DoneFlag size="lg" />}
+          {images?.length > 0 ? (
             <>
-              {images.map((img, index) => (
+              {images?.map((img, index) => (
                 <div
                   key={index}
                   className={`absolute inset-0 transition-all duration-700 ease-out ${
@@ -76,7 +78,7 @@ export default function DestinationDetails({ destination, onClose }) {
                   boxShadow: '0 2px 12px rgba(0,0,0,0.2)',
                 }}
               >
-                {images.map((_, index) => (
+                {images?.map((_, index) => (
                   <button
                     key={index}
                     onClick={(e) => { e.stopPropagation(); setCurrentSlide(index) }}
@@ -382,10 +384,14 @@ export default function DestinationDetails({ destination, onClose }) {
                 </svg>
               </div>
               <p className="font-display text-2xl md:text-3xl mb-4 relative" style={{ color: 'var(--text-primary)' }}>
-                Ready to ride to {destination.name}?
+                {destination?.completed
+                  ? `Ridden — ${destination.name} is in the logbook`
+                  : `Ready to ride to ${destination.name}?`}
               </p>
               <p className="mb-8 relative" style={{ color: 'var(--text-secondary)' }}>
-                Pack your gear, fuel up your Hunter 350, and hit the road.
+                {destination?.completed
+                  ? 'This ride is done. Open the map again whenever you want a rematch.'
+                  : 'Pack your gear, fuel up your Hunter 350, and hit the road.'}
               </p>
               <button
                 onClick={handleClose}

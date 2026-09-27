@@ -2,6 +2,7 @@ export const destinations = [
   {
     id: 1,
     name: 'Coorg',
+    completed: true,
     description: 'Scotland of India with lush coffee plantations, waterfalls, and misty hills.',
     distance: 270,
     travelTime: '5-6 hours',
@@ -28,6 +29,7 @@ export const destinations = [
   {
     id: 2,
     name: 'Ooty',
+    completed: true,
     description: 'Queen of Hill Stations with tea gardens, botanical gardens, and scenic Nilgiri railways.',
     distance: 270,
     travelTime: '5-6 hours',

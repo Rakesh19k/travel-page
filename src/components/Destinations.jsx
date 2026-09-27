@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { destinations } from '../data/destinations'
 import DestinationDetails from './DestinationDetails'
+import DoneFlag from './DoneFlag'
 
 const difficultyColors = {
   Easy: 'bg-green-500/20 text-green-600 dark:text-green-400 border-green-500/30',
@@ -75,12 +76,16 @@ export default function Destinations() {
                   borderColor: 'var(--border-color)',
                 }}
               >
+                {dest?.completed && <DoneFlag />}
                 <div className="absolute top-4 right-4">
                   <span className={`px-2.5 py-1 rounded-md text-xs font-medium border ${difficultyColors[dest.difficulty]}`}>
                     {dest.difficulty}
                   </span>
                 </div>
-                <h3 className="font-display text-2xl mb-2 group-hover:text-[var(--accent)] transition-colors duration-300" style={{ color: 'var(--text-primary)' }}>
+                <h3
+                  className={`font-display text-2xl mb-2 group-hover:text-[var(--accent)] transition-colors duration-300 ${dest?.completed ? 'mt-7' : ''}`}
+                  style={{ color: 'var(--text-primary)' }}
+                >
                   {dest.name}
                 </h3>
                 <p className="text-sm mb-4 line-clamp-2 transition-colors duration-500" style={{ color: 'var(--text-secondary)' }}>
