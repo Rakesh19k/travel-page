@@ -134,6 +134,7 @@ export const destinations = [
   {
     id: 6,
     name: 'Goa',
+    completed: true,
     description: 'Sun, sand, and sea with coastal roads, beaches, and Portuguese heritage.',
     distance: 560,
     travelTime: '10-11 hours',
@@ -160,6 +161,7 @@ export const destinations = [
   {
     id: 7,
     name: 'Munnar',
+    completed: true,
     description: 'Rolling hills of tea estates, waterfalls, and the famous Eravikulam National Park.',
     distance: 460,
     travelTime: '8-9 hours',
