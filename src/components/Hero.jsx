@@ -1,42 +1,62 @@
 import { useState, useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
-import { bikeIamges } from '../data/destinations'
+import { bikeIamges, upcomingDestinations } from '../data/destinations'
+import moment from 'moment'
 
 export default function Hero() {
   const { theme } = useTheme()
   
 
-  // Utility to check if today matches a specific date, month, and year
-  function isGivenDateToday(day, month, year) {
+  // Utility to check if the trip has started (today or after the start date)
+  function isTripStartedFn(day, month, year) {
     const today = new Date()
-    return (
-      today.getDate() === day &&
-      today.getMonth() === month - 1 && // JS months are 0-based
-      today.getFullYear() === year
-    )
+    const tripDate = new Date(year, month - 1, day)
+    return today >= tripDate
   }
 
-  // Set target trip date here
-  const TRIP_DAY = 24
-  const TRIP_MONTH = 9 // October (1-based)
-  const TRIP_YEAR = 2026 // Change as needed
+  // Utility to check if the trip has ended (after trip end date)
+  function isTripCompletedFn(dayEnd, month, year) {
+    const today = new Date()
+    const tripEndDate = new Date(year, month - 1, dayEnd)
+    // If today is after trip end date (one day after tripDayEnd)
+    return today > tripEndDate
+  }
 
-  const [isTripStarted, setIsTripStarted] = useState(isGivenDateToday(1,10,2026))
+  const [isTripStarted, setIsTripStarted] = useState(isTripStartedFn(
+    upcomingDestinations.tripDay,
+    upcomingDestinations.tripMonth,
+    upcomingDestinations.tripYear,
+  ))
+  const [isTripCompleted, setIsTripCompleted] = useState(isTripCompletedFn(
+    upcomingDestinations.tripDayEnd,
+    upcomingDestinations.tripMonth,
+    upcomingDestinations.tripYear,
+  ))
 
   useEffect(() => {
-    if (!isTripStarted) {
+    if (!isTripStarted ) {
       const now = new Date()
       const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
       const msToMidnight = nextMidnight - now
       const timer = setTimeout(() => {
-        if (isGivenDateToday(TRIP_DAY, TRIP_MONTH, TRIP_YEAR)) {
+        if (!isTripStarted && isTripStartedFn(
+          upcomingDestinations.tripDay,
+          upcomingDestinations.tripMonth,
+          upcomingDestinations.tripYear,
+        )) {
           setIsTripStarted(true)
         }
-      }, msToMidnight + 100) // +100ms to ensure date rolled over
-
+        if (!isTripCompleted && isTripCompletedFn(
+          upcomingDestinations.tripDayEnd,
+          upcomingDestinations.tripMonth,
+          upcomingDestinations.tripYear,
+        )) {
+          setIsTripCompleted(true)
+        }
+      }, msToMidnight + 100)
       return () => clearTimeout(timer)
     }
-  }, [isTripStarted])
+  }, [isTripStarted, isTripCompleted])
 
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
@@ -86,7 +106,7 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 lg:py-26">
         {/* Upcoming trip — sits above the hero headline */}
-        {isTripStarted ? 
+        {isTripCompleted ? 
           <div className="mb-8 sm:mb-10 lg:mb-12">
             <div
               className="block rounded-2xl border overflow-hidden transition-all duration-300 bg-[var(--bg-primary)]"
@@ -103,13 +123,13 @@ export default function Hero() {
                     color: 'var(--accent)',
                   }}
                 >
-                  Trip Started!
+                  Trip Completed!
                 </span>
                 <h2
                   className="font-display text-2xl sm:text-3xl md:text-4xl tracking-wide mb-2"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  The group ride to Munnar is now underway.
+                  The group ride to Munnar is now completed.
                 </h2>
                 <p className="text-sm sm:text-base max-w-2xl mx-auto mb-3" style={{ color: 'var(--text-secondary)' }}>
                   Thanks for showing interest! The next trip will be posted soon—stay connected for updates and upcoming rides.
@@ -120,7 +140,41 @@ export default function Hero() {
               </div>
             </div>
           </div>
-        : 
+        : isTripStarted ? 
+          <div className="mb-8 sm:mb-10 lg:mb-12">
+          <div
+            className="block rounded-2xl border overflow-hidden transition-all duration-300 bg-[var(--bg-primary)]"
+            style={{
+              background: 'linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, var(--bg-secondary)), var(--bg-primary))',
+              borderColor: 'color-mix(in srgb, var(--accent) 18%, transparent)',
+            }}
+          >
+            <div className="flex flex-col items-center justify-center py-10 md:px-10 md:py-14 text-center">
+              <span
+                className="px-4 py-1.5 rounded-full text-sm font-semibold uppercase tracking-wider mb-3"
+                style={{
+                  backgroundColor: 'color-mix(in srgb, var(--accent) 16%, transparent)',
+                  color: 'var(--accent)',
+                }}
+              >
+                Trip Started!
+              </span>
+              <h2
+                className="font-display text-2xl sm:text-3xl md:text-4xl tracking-wide mb-2"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                The group ride to Munnar is now underway.
+              </h2>
+              <p className="text-sm sm:text-base max-w-2xl mx-auto mb-3" style={{ color: 'var(--text-secondary)' }}>
+                Thanks for showing interest! The next trip will be posted soon—stay connected for updates and upcoming rides.
+              </p>
+              <div className="flex flex-col items-center gap-2 text-xs" style={{ color: 'var(--text-muted)' }}>
+                <span>Follow us for announcements on the next adventure.</span>
+              </div>
+            </div>
+          </div>
+          </div>
+        :
           <div className="mb-8 sm:mb-10 lg:mb-12">
             <a
               href="#destinations"
@@ -137,8 +191,8 @@ export default function Hero() {
                   style={{ backgroundColor: 'var(--accent)' }}
                 >
                   <span className="text-xs uppercase tracking-[0.2em] font-semibold opacity-90">Starts</span>
-                  <span className="font-display text-4xl md:text-5xl leading-none tracking-wide">01</span>
-                  <span className="text-sm font-semibold uppercase tracking-widest">Oct 2026</span>
+                  <span className="font-display text-4xl md:text-5xl leading-none tracking-wide">{upcomingDestinations.tripDay}</span>
+                  <span className="text-sm font-semibold uppercase tracking-widest">{moment().month(upcomingDestinations.tripMonth-1).format('MMM')} {upcomingDestinations.tripYear}</span>
                 </div>
 
                 {/* Trip copy */}
@@ -162,17 +216,17 @@ export default function Hero() {
                     className="font-display text-3xl sm:text-4xl tracking-wide mb-1"
                     style={{ color: 'var(--text-primary)' }}
                   >
-                    Bengaluru → Munnar
+                    {upcomingDestinations.from} → {upcomingDestinations.to}
                   </h2>
                   <p className="text-sm sm:text-base mb-4 max-w-2xl" style={{ color: 'var(--text-secondary)' }}>
-                    Tea-estate ghats, waterfalls, and cool hill air. We roll out from Bangalore on 1 October with a small pack of rider friends. Hunter 350s welcome — every mile is the story.
+                      {upcomingDestinations.description}
                   </p>
 
                   <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
-                    <span><strong style={{ color: 'var(--text-primary)' }}>~460 km</strong> · 8–9 hrs</span>
-                    <span><strong style={{ color: 'var(--text-primary)' }}>Start Point</strong> · FF21-PODS, Thubarahalli, Bangalore</span>
-                    <span><strong style={{ color: 'var(--text-primary)' }}>End Point</strong> · Munnar, Kerala</span>
-                    <span><strong style={{ color: 'var(--text-primary)' }}>Contact Number</strong> · +91 7488967469</span>
+                    <span><strong style={{ color: 'var(--text-primary)' }}>~{upcomingDestinations.distance} km</strong> : {upcomingDestinations.travelTime}</span>
+                    <span><strong style={{ color: 'var(--text-primary)' }}>Start Point</strong> : {upcomingDestinations.startPoint}</span>
+                    <span><strong style={{ color: 'var(--text-primary)' }}>End Point</strong> : {upcomingDestinations.to}</span>
+                    <span><strong style={{ color: 'var(--text-primary)' }}>Contact Number</strong> : +91 7488967469</span>
                   </div>
                 </div>
 

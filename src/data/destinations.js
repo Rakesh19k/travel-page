@@ -241,3 +241,18 @@ export const bikeIamges = [
     style: { animationDelay: '0.25s' },
   },
 ]
+
+
+
+export const upcomingDestinations = {
+    from: 'Bengaluru',
+    to: 'Munnar, Kerala',
+    startPoint: "FF21-PODS",
+    description: 'Tea-estate ghats, waterfalls, and cool hill air. We roll out from Bangalore on 1 October with a small pack of rider friends. Hunter 350s welcome — every mile is the story.',
+    distance: 460,
+    travelTime: '8-9 hours',
+    tripDay: 1,
+    tripMonth: 10,
+    tripYear: 2026,
+    tripDayEnd: 4
+  }
